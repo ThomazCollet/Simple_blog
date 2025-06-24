@@ -18,6 +18,15 @@ public class UserService {
     public User create(User user) {
 
         user.setId(null);
+
+        // Adicionando Role ao user
+        if (userRepository.countByRole("ADMIN") == 0) {
+            user.setRole("ADMIN");
+        } else {
+            user.setRole("USER");
+        }
+
+        // Criando usuario
         User savedUser = userRepository.save(user);
         return savedUser;
     }
@@ -39,13 +48,13 @@ public class UserService {
 
         // Salvar no banco
         User updatedUser = userRepository.save(user);
-        
+
         return updatedUser;
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
 
-        //Testando se o usuario existe
+        // Testando se o usuario existe
         userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         // Excluindo o usuário
@@ -53,11 +62,34 @@ public class UserService {
 
     }
 
-    public User findById(Long id){
-        
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+    public User findById(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
         return user;
+    }
+    @Transactional
+    public User switchRole(User authenticatedUser, User targetUser) {
+
+        if (!authenticatedUser.getRole().equals("ADMIN")) {
+            throw new RuntimeException("Apenas administradores podem realizar essa operação");
+        }
+
+        // Checando se o usuario ta alterando o role da propria conta
+        if (authenticatedUser.getId().equals(targetUser.getId())) {
+
+            throw new RuntimeException("Não é possivel alterar o status da prória conta.");
+        }
+
+        // Alternar entre USER e ADMIN
+        if (targetUser.getRole().equals("USER")) {
+            targetUser.setRole("ADMIN");
+        } else {
+            targetUser.setRole("USER");
+        }
+
+        return userRepository.save(targetUser);
     }
 
 }

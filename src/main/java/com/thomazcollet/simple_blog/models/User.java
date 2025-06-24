@@ -111,13 +111,12 @@ public class User {
     public User() {
     } // Contrutor vazio obrigatório em classes models
 
-    public User(Long id, String userName, String email, String password, LocalDateTime createdAt, String role) {
+    public User(Long id, String userName, String email, String password, LocalDateTime createdAt) {
         this.id = id;
         this.username = userName;
         this.email = email;
         this.password = password;
         this.createdAt = createdAt;
-        this.role = role;
     }
 
     // HashCode and Equals

@@ -12,6 +12,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,8 +40,14 @@ public class BlogPost {
     @Column(name = "body", nullable = false, unique = false, columnDefinition = "TEXT")
     private String body;
 
+    @Column(name = "publishedAt")
     @CreationTimestamp
     private LocalDateTime publishedAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
 
     // Construtores
 
@@ -95,6 +103,16 @@ public class BlogPost {
     public void setPublishedAt(LocalDateTime publishedAt) {
         this.publishedAt = publishedAt;
     }
+
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 
     @Override
     public boolean equals(Object o) {
