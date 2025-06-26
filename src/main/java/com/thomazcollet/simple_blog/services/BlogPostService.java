@@ -25,7 +25,7 @@ public class BlogPostService {
     }
 
     public List<BlogPost> findAllByAuthorUsername(String username) {
-        User author = userRepository.findByUserName(username)
+        User author = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Autor não encontrado."));
 
         List<BlogPost> posts = blogPostRepository.findAllByAuthor(author);
@@ -49,7 +49,7 @@ public class BlogPostService {
     public BlogPost create(BlogPost blogPost) {
 
         // Checkando se o autor do post é um admin
-        if (!blogPost.getAuthor().getRole().equals("ADMIN")) {
+        if (!blogPost.getAuthor().getRole().equalsIgnoreCase("ADMIN")) {
             throw new RuntimeException("Apenas administradores podem criar posts.");
         }
 
@@ -69,7 +69,7 @@ public class BlogPostService {
                 .orElseThrow(() -> new RuntimeException("Post não encontrado."));
 
         // Verificar se o autor do post é ADMIN
-        if (!existingPost.getAuthor().getRole().equals("ADMIN")) {
+        if (!existingPost.getAuthor().getRole().equalsIgnoreCase("ADMIN")) {
             throw new RuntimeException("Apenas administradores podem atualizar posts.");
         }
 
@@ -81,14 +81,21 @@ public class BlogPostService {
         return blogPostRepository.save(existingPost);
     }
 
-    public void delete(Long id) {
+    public void delete(Long postId, User authenticatedUser) {
 
-        // Testando se o id existe
-        blogPostRepository.findById(id).orElseThrow(() -> new RuntimeException("Post não encontrado"));
+        // Buscar o post apenas uma vez
+        BlogPost post = blogPostRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post não encontrado"));
 
-        // Excluindo post
-        blogPostRepository.deleteById(id);
+        // Verificar se o autor do post é o usuário autenticado E se ele é admin
+        if (post.getAuthor().getId().equals(authenticatedUser.getId())
+                && authenticatedUser.getRole().equalsIgnoreCase("ADMIN")) {
 
+            blogPostRepository.deleteById(postId);
+
+        } else {
+            throw new RuntimeException("Você não possui autorização para realizar essa operação");
+        }
     }
 
 }

@@ -53,14 +53,19 @@ public class UserService {
     }
 
     public void delete(Long id) {
+    // Buscar o usuário
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        // Testando se o usuario existe
-        userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-        // Excluindo o usuário
-        userRepository.deleteById(id);
-
+    // Bloquear remoção de administradores
+    if (user.getRole().equalsIgnoreCase("ADMIN")) {
+        throw new RuntimeException("Não é possível deletar um usuário administrador.");
     }
+
+    // Deletar usuário
+    userRepository.deleteById(id);
+}
+
 
     public User findById(Long id) {
 
@@ -69,6 +74,8 @@ public class UserService {
 
         return user;
     }
+
+
     @Transactional
     public User switchRole(User authenticatedUser, User targetUser) {
 
@@ -76,10 +83,8 @@ public class UserService {
             throw new RuntimeException("Apenas administradores podem realizar essa operação");
         }
 
-        // Checando se o usuario ta alterando o role da propria conta
         if (authenticatedUser.getId().equals(targetUser.getId())) {
-
-            throw new RuntimeException("Não é possivel alterar o status da prória conta.");
+        throw new RuntimeException("Você não pode alterar seu próprio papel.");
         }
 
         // Alternar entre USER e ADMIN

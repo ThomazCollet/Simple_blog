@@ -7,7 +7,7 @@ import com.thomazcollet.simple_blog.models.User;
 
 public interface UserRepository extends JpaRepository <User, Long> {
     
-    Optional<User> findByUserName(String userName);
+    Optional<User> findByUsername(String userName);
     long countByRole(String role);
 
 }
