@@ -20,6 +20,8 @@ import com.thomazcollet.simple_blog.models.BlogPost;
 import com.thomazcollet.simple_blog.models.User;
 import com.thomazcollet.simple_blog.services.BlogPostService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/post")
 @Validated
@@ -51,7 +53,7 @@ public class BlogPostController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> create(@RequestBody BlogPost blogPost) {
+    public ResponseEntity<Void> create(@Valid @RequestBody BlogPost blogPost) {
         BlogPost savedPost = this.blogPostService.create(blogPost);
 
         URI uri = ServletUriComponentsBuilder
@@ -64,7 +66,7 @@ public class BlogPostController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody BlogPost blogPost) {
+    public ResponseEntity<Void> update(@Valid @RequestBody BlogPost blogPost) {
         this.blogPostService.update(blogPost);
         return ResponseEntity.noContent().build(); // 204 No Content, operação bem-sucedida sem corpo
     }

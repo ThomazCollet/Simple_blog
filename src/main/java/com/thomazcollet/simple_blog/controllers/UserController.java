@@ -40,8 +40,7 @@ public class UserController {
     }
 
     @PostMapping()
-    @Validated
-    public ResponseEntity<Void> create(@RequestBody User user) {
+    public ResponseEntity<Void> create(@Valid @RequestBody User user) {
         User savedUser = userService.create(user);
 
         URI uri = ServletUriComponentsBuilder
