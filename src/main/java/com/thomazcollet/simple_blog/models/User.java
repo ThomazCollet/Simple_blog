@@ -26,7 +26,7 @@ public class User {
     // Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Configuração auto incremento no mySQL
-    @Column(name = "user_id", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private Long id; // Chave primária
 
     @Column(name = "username", length = 30, unique = true, nullable = false)

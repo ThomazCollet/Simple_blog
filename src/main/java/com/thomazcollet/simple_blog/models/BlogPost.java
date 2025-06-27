@@ -31,7 +31,6 @@ public class BlogPost {
     @Size(min = 1, max = 200)
     private String title;
 
-    @NotBlank
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
