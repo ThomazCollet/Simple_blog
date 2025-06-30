@@ -1,0 +1,115 @@
+ body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+header {
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header .actions {
+  margin-top: 10px;
+}
+
+header input {
+  padding: 6px;
+  width: 200px;
+}
+
+header button {
+  margin-left: 10px;
+  padding: 6px 12px;
+}
+
+main {
+  padding: 20px;
+}
+
+.post-preview {
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.post-preview h3 {
+  margin-top: 0;
+}
+
+.meta {
+  color: gray;
+  font-size: 0.9em;
+}
+
+/* Container centralizado e fundo branco para formulário */
+.form-container {
+  background-color: white;
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+form input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+form button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: #222;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: bold;
+  width: 100%;
+}
+
+form button:hover {
+  background-color: #444;
+}
+
+.small-link {
+  font-size: 0.9em;
+  color: #222;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.small-link:hover {
+  color: #555;
+}
+
+/* Header links estilo */
+
+header .actions {
+  margin-top: 10px;
+}
+
+.header-link {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+.header-link:hover {
+  text-decoration: underline;
+}
